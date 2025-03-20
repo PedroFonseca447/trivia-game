@@ -28,7 +28,16 @@ export default {
       return {
         question: undefined,
         incorrectAnswers: undefined,
-        correctAnswers: undefined
+        correctAnswers: undefined,
+        
+      }
+  },
+
+  computed: {
+      answers() {
+        var answers = [...this.incorrectAnswers];
+        answers.push(this.correctAnswers);
+        return answers;
       }
   },
   
@@ -42,11 +51,13 @@ export default {
         this.incorrectAnswers =  response.data.results[0].incorrect_answers;
         this.correctAnswers=  response.data.results[0].correct_answer;
 
-
+        //apenas PEGUE OS DADOS AQUI 
         console.log(response.data.results[0])
       })
 
  }
+
+  
  
 }//na template fica tudo que é visivel na pagina
 
