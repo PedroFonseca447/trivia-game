@@ -1,6 +1,13 @@
 <template>
  
+        
+    
+
 <div>
+
+      <ScoreBoard />
+
+
         <template v-if="this.question">
 
           <h1
@@ -11,6 +18,7 @@
     
     
             <input type="radio" 
+            :disabled="this.answerSubmitted"
             name="options"
             :value="answer"
             v-model="this.chosenAnswer"
@@ -19,7 +27,19 @@
             
           </template>
           
-          <button @click="this.subimitAnswer" class="send" type="button">Send</button>
+          <button v-if="!this.answerSubmitted" @click="this.subimitAnswer" class="send" type="button">Send</button>
+          
+          
+          <section v-if="this.answerSubmitted" class="result">
+            <h4 v-if="this.chosenAnswer == this.correctAnswers" v-html= "'&#9989; Congratiulations you pick the right answer.' + this.correctAnswers + 'is correct.'">
+                
+            </h4>
+            <h4 v-else v-html= "'&#10060; I`m sorry, you picked the wrong answer. The correct is' + this.correctAnswers + '.'" >
+            
+            </h4>
+
+              <button @click="this.getNewQuestion" class="send" type="button">Next question</button>
+          </section>
           
           
         </template>
@@ -32,15 +52,25 @@
 <script>
 
 
+import ScoreBoard from './components/ScoreBoard.vue';
+
+
+
 export default {
   name: 'App',
+
+  components: {
+    ScoreBoard
+  },
+
 
   data(){
       return {
         question: undefined,
         incorrectAnswers: undefined,
         correctAnswers: undefined,
-        chosenAnswer: undefined
+        chosenAnswer: undefined,
+        answerSubmitted: false
         
       }
   },
@@ -59,27 +89,40 @@ export default {
               if(!this.chosenAnswer){
                   alert('Pic one of the options')
               } else {
+                  this.answerSubmitted = true;
                   if(this.chosenAnswer== this.correctAnswers){
-                    alert('you got it right!')
+                   console.log('you got it right!')
+                  }
+                  else{
+                    console.log('your answer is wrong')
                   }
               }
+        },
+
+        getNewQuestion(){
+
+          this.answerSubmitted = false;
+          this.chosenAnswer = undefined;
+          this.question = undefined;
+
+          this.axios
+                .get('https://opentdb.com/api.php?amount=1')
+                .then((response) => {
+                  this.question = response.data.results[0].question;
+                  this.incorrectAnswers =  response.data.results[0].incorrect_answers;
+                  this.correctAnswers=  response.data.results[0].correct_answer;
+
+                  //apenas PEGUE OS DADOS AQUI 
+                  console.log(response.data.results[0])
+                })
         }
   
   },
   
  created(){
 
-
-      this.axios
-      .get('https://opentdb.com/api.php?amount=1')
-      .then((response) => {
-        this.question = response.data.results[0].question;
-        this.incorrectAnswers =  response.data.results[0].incorrect_answers;
-        this.correctAnswers=  response.data.results[0].correct_answer;
-
-        //apenas PEGUE OS DADOS AQUI 
-        console.log(response.data.results[0])
-      })
+      this.getNewQuestion();
+     
 
  }
 
