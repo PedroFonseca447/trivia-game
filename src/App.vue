@@ -1,22 +1,31 @@
 <template>
  
 <div>
-  
-      <h1
-        v-html="this.question"
-      ></h1>
+        <template v-if="this.question">
 
-  <input type="radio" name="options" value="True">
-  <label>True</label><br>
-
-  <input type="radio" name="options" value="False">
-  <label>False</label><br>
-
-  <button class="send" type="button">Send</button>
+          <h1
+            v-html="this.question"
+          ></h1>
+      
+          <template v-for="(answer, index) in  this.answers" :key="index">
+    
+    
+            <input type="radio" 
+            name="options"
+            value="answer">
+            <label v-html="answer"></label><br>
+    
+    
+          </template>
+      
+      <button class="send" type="button">Send</button>
+          
+        </template>
 
 </div> 
 
 </template>
+
 
 <script>
 
@@ -32,11 +41,11 @@ export default {
         
       }
   },
-
+  //METHODS OU COMPUTED PROPERTIES 
   computed: {
       answers() {
         var answers = [...this.incorrectAnswers];
-        answers.push(this.correctAnswers);
+        answers.splice(Math.round(Math.random() *4) ,0 ,this.correctAnswers);
         return answers;
       }
   },
