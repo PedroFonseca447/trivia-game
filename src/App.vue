@@ -12,13 +12,15 @@
     
             <input type="radio" 
             name="options"
-            value="answer">
+            :value="answer"
+            v-model="this.chosenAnswer"
+            >
             <label v-html="answer"></label><br>
-    
-    
+            
           </template>
-      
-      <button class="send" type="button">Send</button>
+          
+          <button @click="this.subimitAnswer" class="send" type="button">Send</button>
+          
           
         </template>
 
@@ -38,6 +40,7 @@ export default {
         question: undefined,
         incorrectAnswers: undefined,
         correctAnswers: undefined,
+        chosenAnswer: undefined
         
       }
   },
@@ -48,6 +51,20 @@ export default {
         answers.splice(Math.round(Math.random() *4) ,0 ,this.correctAnswers);
         return answers;
       }
+  },
+
+  methods: {
+
+        subimitAnswer(){
+              if(!this.chosenAnswer){
+                  alert('Pic one of the options')
+              } else {
+                  if(this.chosenAnswer== this.correctAnswers){
+                    alert('you got it right!')
+                  }
+              }
+        }
+  
   },
   
  created(){
