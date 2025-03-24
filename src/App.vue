@@ -5,7 +5,7 @@
 
 <div>
 
-      <ScoreBoard />
+      <ScoreBoard :playerCount="this.playerCount" :loseCount="this.botCount"/>
 
 
         <template v-if="this.question">
@@ -70,7 +70,9 @@ export default {
         incorrectAnswers: undefined,
         correctAnswers: undefined,
         chosenAnswer: undefined,
-        answerSubmitted: false
+        answerSubmitted: false,
+        playerCount: 0,
+        botCount: 0
         
       }
   },
@@ -91,10 +93,10 @@ export default {
               } else {
                   this.answerSubmitted = true;
                   if(this.chosenAnswer== this.correctAnswers){
-                   console.log('you got it right!')
+                    this.playerCount++;
                   }
                   else{
-                    console.log('your answer is wrong')
+                    this.botCount++;
                   }
               }
         },

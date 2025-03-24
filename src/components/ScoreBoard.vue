@@ -7,7 +7,7 @@
     </div>
 
         <section class="score">
-                Player <span>0</span> x <span>0</span> Computer
+                Player <span>{{this.playerCount}}</span> x <span>{{ this.botCount }}</span> Computer
         </section>
 
 
@@ -20,8 +20,9 @@
 <script>
 
         export default{
-
-        }
+                //props sao prorpriedade de dados e nao podemos alterar elas nesse nivel
+                props: [ 'playerCount', 'loseCount']
+        }   
 
 </script>
 
