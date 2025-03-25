@@ -7,7 +7,7 @@
     </div>
 
         <section class="score">
-                Player <span>{{this.playerCount}}</span> x <span>{{ this.botCount }}</span> Computer
+                Player <span>{{this.playerCount}}</span> x <span>{{ this.loseCount }}</span> Computer
         </section>
 
 
