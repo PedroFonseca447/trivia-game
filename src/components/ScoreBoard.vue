@@ -2,9 +2,7 @@
 
 <template>
 
-    <div>
-        ScoreBoard component
-    </div>
+    
 
         <section class="score">
                 Player <span>{{this.playerCount}}</span> x <span>{{ this.loseCount }}</span> Computer
